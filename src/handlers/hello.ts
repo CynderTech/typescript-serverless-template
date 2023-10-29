@@ -4,14 +4,17 @@ import GreetingService from '../services/greeting-service';
 
 const greetingService = new GreetingService('!');
 
-module.exports.handle = async (event: APIGatewayProxyEvent, context: Context) => {
-  const result = {
-    requestId: context.awsRequestId,
-    message: greetingService.greet(process.env.HELLO_WHO as string),
-  };
+module.exports.handle = async (
+	event: APIGatewayProxyEvent,
+	context: Context,
+) => {
+	const result = {
+		requestId: context.awsRequestId,
+		message: greetingService.greet(process.env.HELLO_WHO as string),
+	};
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(result),
-  };
+	return {
+		statusCode: 200,
+		body: JSON.stringify(result),
+	};
 };

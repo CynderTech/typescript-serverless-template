@@ -1,11 +1,62 @@
 {
-  "root": true,
-  "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "env": {
+    "jest": true
+  },
   "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended"
-  ]
+    "airbnb-base",
+    "airbnb-typescript/base"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/*.spec.js",
+        "**/*.spec.jsx",
+        "**/*.test.js",
+        "**/*.test.jsx"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": [
+      "./tsconfig.json"
+    ]
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "sort-destructure-keys"
+  ],
+  "root": true,
+  "rules": {
+    "@typescript-eslint/indent": [
+      "error",
+      "tab",
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "@typescript-eslint/space-before-blocks": "off",
+    "consistent-return": "warn",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "import/no-import-module-exports": "off",
+    "no-tabs": "off",
+    "no-use-before-define": "error",
+    "operator-linebreak": "off",
+    "prettier/prettier": "error",
+    "sort-destructure-keys/sort-destructure-keys": [
+      "error",
+      {
+        "caseSensitive": true
+      }
+    ]
+  }
 }
