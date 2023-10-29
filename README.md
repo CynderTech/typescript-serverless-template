@@ -1,6 +1,6 @@
 # typescript-serverless-template
 
-Template for serverless typescript projects.
+Template for Serverless TypeScript projects.
 
 Since this tries to follow the [3 Musketeers](https://3musketeersdev.netlify.app) methodology, the following are heavily used:
 
@@ -10,35 +10,35 @@ Since this tries to follow the [3 Musketeers](https://3musketeersdev.netlify.app
 
 ## Usage
 
-#### configure
+#### Configure
 
 ```bash
 $ make .env
 ```
 
-- see generated `.env` file for configuration
+- See generated `.env` file for configuration
 
 **Note:** For deployment via CI/CD, `CICD_MODE` environment variable should be set to `true` in the build server. All configuration should also be set in the build server's environment variables. They will automatically be used if `.env` is generated from `.env.cicd`.
 
-#### install dependencies (generate `node_modules`)
+#### Install dependencies (generate `node_modules`)
 
 ```bash
 $ make deps
 ```
 
-#### run linter (autofix)
+#### Run linter (autofix)
 
 ```bash
 $ make lint
 ```
 
-#### run tests
+#### Run tests
 
 ```bash
 $ make test
 ```
 
-#### deploy serverless application
+#### Deploy Serverless application
 
 ```bash
 $ make deploy
