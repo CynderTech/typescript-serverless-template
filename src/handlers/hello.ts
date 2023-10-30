@@ -10,7 +10,7 @@ module.exports.handle = async (
 ) => {
 	const result = {
 		requestId: context.awsRequestId,
-		message: greetingService.greet(process.env.HELLO_WHO as string),
+		message: greetingService.greet(process.env.GREET_WHO as string),
 	};
 
 	return {

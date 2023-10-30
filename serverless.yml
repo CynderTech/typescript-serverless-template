@@ -1,5 +1,7 @@
 service: typescript-serverless-template
 
+frameworkVersion: "3"
+
 package:
   individually: true
 
@@ -26,4 +28,4 @@ functions:
           method: get
           path: /hello
     environment:
-      HELLO_WHO: ${env:HELLO_WHO}
+      GREET_WHO: ${env:GREET_WHO}

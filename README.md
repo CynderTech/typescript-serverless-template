@@ -1,6 +1,6 @@
 # typescript-serverless-template
 
-Template for Serverless TypeScript projects.
+Template for TypeScript Serverless applications.
 
 Since this tries to follow the [3 Musketeers](https://3musketeersdev.netlify.app) methodology, the following are heavily used:
 
