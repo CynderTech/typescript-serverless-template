@@ -1,11 +1,11 @@
-export class GreetingService {
-  punctuation: string;
+export default class GreetingService {
+	punctuation: string;
 
-  constructor(punctuation: string) {
-    this.punctuation = punctuation;
-  }
+	constructor(punctuation: string) {
+		this.punctuation = punctuation;
+	}
 
-  greet(name: string): string {
-    return `Hello, ${name}${this.punctuation}`;
-  }
+	greet(name: string): string {
+		return `Hello, ${name}${this.punctuation}`;
+	}
 }
