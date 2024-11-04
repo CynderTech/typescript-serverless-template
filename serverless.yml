@@ -4,6 +4,10 @@ frameworkVersion: "3"
 
 package:
   individually: true
+  patterns:
+    # - '!node_modules/**'
+    # - 'node_modules/node-fetch/**'
+    - 'node_modules/**'
 
 provider:
   name: aws
@@ -15,6 +19,23 @@ provider:
   region: ${env:AWS_REGION}
   httpApi:
     cors: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'dynamodb:BatchGetItem'
+            - 'dynamodb:ConditionCheckItem'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Query'
+            - 'dynamodb:Get*'
+            - 'dynamodb:Scan*'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource:
+            - arn:aws:dynamodb:${env:AWS_REGION}:*:table/${env:AWS_DYNAMODB_TABLE_NAME}
+  environment:
+    AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
 
 plugins:
   - serverless-plugin-typescript
@@ -30,3 +51,69 @@ functions:
           path: /hello
     environment:
       GREET_WHO: ${env:GREET_WHO}
+  organization-retrieve:
+    handler: src/handlers/organizations/retrieve.handle
+    timeout: 20
+    memorySize: 128
+    events:
+      - httpApi:
+          method: get
+          path: /organizations
+    environment:
+          AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+  organization-get:
+    handler: src/handlers/organizations/get.handle
+    timeout: 20
+    memorySize: 128
+    events:
+      - httpApi:
+          method: GET
+          path: /organizations/{name}
+    environment:
+          AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+  organization-create:
+    handler: src/handlers/organizations/create.handle
+    timeout: 20
+    memorySize: 128
+    events:
+      - httpApi:
+          method: post
+          path: /organizations
+    environment:
+          AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+  organization-update:
+    handler: src/handlers/organizations/update.handle
+    timeout: 20
+    memorySize: 128
+    events:
+      - httpApi:
+          method: put
+          path: /organizations/{name}
+    environment:
+          AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+  organization-delete:
+    handler: src/handlers/organizations/delete.handle
+    timeout: 20
+    memorySize: 128
+    events:
+      - httpApi:
+          method: delete
+          path: /organizations/{name}
+    environment:
+          AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+
+resources:
+  Resources:
+    OrganizationTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:AWS_DYNAMODB_TABLE_NAME}
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
