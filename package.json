@@ -12,13 +12,15 @@
     "dependencies:update": "npm-check -u"
   },
   "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.669.0",
+    "@aws-sdk/lib-dynamodb": "^3.669.0",
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
     "@types/aws-lambda": "^8.10.145",
     "@types/node": "^20.8.9",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
-    "aws-sdk": "^2.1685.0",
+    "aws-sdk": "^2.1691.0",
     "eslint": "^8.52.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
@@ -35,5 +37,9 @@
     "serverless-plugin-typescript": "^2.1.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.17.12",
+    "lodash": "^4.17.21"
   }
 }
