@@ -4,10 +4,10 @@ frameworkVersion: "3"
 
 package:
   individually: true
-  patterns:
+  # patterns:
     # - '!node_modules/**'
     # - 'node_modules/node-fetch/**'
-    - 'node_modules/**'
+    # - 'node_modules/**'
 
 provider:
   name: aws
@@ -34,8 +34,14 @@ provider:
             - 'dynamodb:DeleteItem'
           Resource:
             - arn:aws:dynamodb:${env:AWS_REGION}:*:table/${env:AWS_DYNAMODB_TABLE_NAME}
+        - Effect: Allow
+          Action:
+            - s3:*
+          Resource:
+             - arn:aws:s3:::${env:AWS_S3_BUCKET_NAME}/* 
   environment:
     AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+    AWS_S3_BUCKET_NAME: ${env:AWS_S3_BUCKET_NAME}
 
 plugins:
   - serverless-plugin-typescript
@@ -101,6 +107,17 @@ functions:
           path: /organizations/{name}
     environment:
           AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+  organization-upload:
+    handler: src/handlers/organizations/upload.handle
+    timeout: 20
+    memorySize: 128
+    events:
+      - httpApi:
+          method: put
+          path: /organizations/{name}/upload
+    environment:
+          AWS_DYNAMODB_TABLE_NAME: ${env:AWS_DYNAMODB_TABLE_NAME}
+          AWS_S3_BUCKET_NAME: ${env:AWS_S3_BUCKET_NAME}
 
 resources:
   Resources:
@@ -117,3 +134,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
+    OrganizationBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${env:AWS_S3_BUCKET_NAME}
